@@ -1,5 +1,7 @@
 from util import parse_csv
 import numpy as np
+import pprint
+import time, os
 
 HEIGHT_WITH_EDGES = 7 # includes additional rows
 WIDTH_WITH_EDGES = 7 # includes additional columns
@@ -7,6 +9,10 @@ BOARD_SIZE = 6 # includes board without edges
 CELL_LEN = 3 # size of matrix to iterated
 CELL_ALIVE = 1
 CELL_DEATED = 0
+
+BLOCK = "block.csv"
+BLINKER = "blinker.csv"
+FILENAME = BLINKER # change filename for different patterns
 
 def get_population(grid):
     return sum([sum(column) for column in grid ])
@@ -32,11 +38,30 @@ def get_amount_neighbor_cells_alive(grid, current_cell:tuple):
     
 def main():
     initial_grid = np.zeros((WIDTH_WITH_EDGES,  HEIGHT_WITH_EDGES))
-    initial_grid[2][2] = 1
-    initial_grid[1][2] = 1
-    initial_grid[2][1] = 1
-    #while True:
-    print(next_iteration(initial_grid))
+    setup_initial_config(initial_grid)
+    show_grip(initial_grid)
+    show_initial_config = input("\n Input b for begin the iterations: ")
+    while show_initial_config == 'b':
+        initial_grid = next_iteration(initial_grid)
+        show_grip(initial_grid)
+        time.sleep(5) # refresh every 5 seconds
+    
+
+def setup_initial_config(grid):
+    print(os.getcwd())
+    for data in parse_csv(FILENAME,types=[int,int]):
+        grid[data["row"]][data["column"]] = CELL_ALIVE
+    
+
+def show_grip(grip):
+    pp = pprint.PrettyPrinter(len(grip))
+    grip_for_show = []
+    for row in grip:
+        grip_for_show.append(list(map(lambda x : 'X' if x == 1 else ' ',row)))
+    pp.pprint(grip_for_show)
+    print("\n")
+    
+
 
 def next_iteration(grid):
 
@@ -59,6 +84,7 @@ def next_iteration(grid):
 
             amount_neighbor_cells_alive = 0
 
-    return temporal_grip
+    grid = temporal_grip # override the initial grip after all the iterations
+    return grid
 if __name__ == '__main__':
     main()

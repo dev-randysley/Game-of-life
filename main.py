@@ -46,8 +46,8 @@ def main():
         initial_grid = next_iteration(initial_grid)
         show_grip(initial_grid)
         time.sleep(5) # refresh every 5 seconds
-        if (keyboard.read_key() == "q"):
-            print("Exit program.")
+        if (keyboard.is_pressed('q')):
+            print("You pressed 'q'.")
             break
     
 

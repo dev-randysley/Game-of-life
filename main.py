@@ -13,6 +13,7 @@ CELL_DEATED = 0
 
 BLOCK = "block.csv"
 BLINKER = "blinker.csv"
+GLIDER = "glider.csv"
 FILENAME = BLINKER # change filename for different patterns
 
 def get_population(grid):

@@ -2,6 +2,7 @@ from util import parse_csv
 import numpy as np
 import pprint
 import time, os
+import keyboard
 
 HEIGHT_WITH_EDGES = 7 # includes additional rows
 WIDTH_WITH_EDGES = 7 # includes additional columns
@@ -45,6 +46,9 @@ def main():
         initial_grid = next_iteration(initial_grid)
         show_grip(initial_grid)
         time.sleep(5) # refresh every 5 seconds
+        if (keyboard.read_key() == "q"):
+            print("Exit program.")
+            break
     
 
 def setup_initial_config(grid):

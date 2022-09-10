@@ -16,9 +16,6 @@ BLINKER = "blinker.csv"
 GLIDER = "glider.csv"
 FILENAME = BLINKER # change filename for different patterns
 
-def get_population(grid):
-    return sum([sum(column) for column in grid ])
-
 def get_initial_cell_position(current_position) :
     x,y = current_position
     return x-1, y-1
@@ -91,5 +88,6 @@ def next_iteration(grid):
 
     grid = temporal_grip # override the initial grip after all the iterations
     return grid
+    
 if __name__ == '__main__':
     main()
